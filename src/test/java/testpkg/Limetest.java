@@ -2,7 +2,6 @@ package testpkg;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -19,17 +18,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 import basepkg.Baseclass;
 import pagepkg.Limepg;
 import utilites.Excelutils;
 
 
 
-public class Limetest  extends Baseclass{
-   
+public class Limetest extends  Baseclass {
+	
 	@Test(priority = 1)
 	public void verifytest() throws IOException, InterruptedException
 	{
+
 		Limepg ob = new Limepg(driver);
 		String xl = "G:\\lime.xlsx";
 		String Sheet = "Sheet1";
@@ -38,143 +39,88 @@ public class Limetest  extends Baseclass{
 		{
 			String mobno =  Excelutils.getCellValue(xl, Sheet, i, 0);
 			System.out.println("mobile no: "+mobno);
-			ob.setvalues(mobno);
-			ob.login();
-			Thread.sleep(8000);
+			ob.profile();
+			driver.navigate().refresh();
+		    ob.setvalues(mobno);
+		    Thread.sleep(9000);
 			
 			
 	     }
-   }
-	
+	}
 	@Test(priority = 2)
 	public void logo()
 	{
-	WebElement logo =	driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]"));
-    boolean boo = 	logo.isDisplayed();
-    if(boo)
-    {
-    	System.out.println("logo is displayed");
-    }
-    else
-    {
-    	System.out.println("not displayed");
-    }
+		Limepg ob = new Limepg(driver);
+	    ob.logo();
     
 	}
 	
 	@Test(priority = 3)
-	public void menus()
+	public void titleverify() throws InterruptedException 
 	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-		driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]")).click();
-	  List<WebElement>	li = driver.findElements(By.xpath("/html/body/div[2]/div[4]/div/div[2]/div/a"));
-	  for(WebElement ele: li)
-	  {
-		  System.out.println(ele.getText());
-	  }
+		Limepg ob = new Limepg(driver);
+		ob.titleverfctn();
+	  
 	}
-	
 	
 	@Test(priority = 4)
-	public void bags()
+	public void menus()
 	{
-		
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-		driver.findElement(By.xpath("//*[@id=\"deskSearch\"]")).click();    
-	    driver.findElement(By.xpath("//*[@id=\"srcInpu\"]")).sendKeys("bags",Keys.ENTER);
-	    driver.findElement(By.xpath("/html/body/div[2]/main/div[2]/div/div[3]/a/img")).click();
-	    driver.findElement(By.xpath("/html/body/div[2]/main/div/div/div[3]/div[1]/div[4]/div[4]/div[2]/div[2]")).click();
-	    
-	    
+		Limepg ob = new Limepg(driver);
+		ob.menus();
 	}
-	
 	
 	
 	@Test(priority = 5)
-	public void txtverify()
+	public void bagsearch()
 	{
-		driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]")).click();	
-	  WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-	  String actual = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[2]/div[4]/div/div[5]/div/div/div[1]/a/div/div[2]"))).getText();
-	  String exp = "SCRAPBOOK";
-	  Assert.assertEquals(actual, exp);
-	  
+		
+		Limepg ob = new Limepg(driver);
+		ob.search();
+	    
+	    
 	}
+	
+	
 	
 		
 	@Test(priority = 6)
 	public void kids() throws InterruptedException
 	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(90));
-		driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]")).click();	
-		String parentwindow = driver.getWindowHandle();
-		driver.findElement(By.xpath("//*[@id=\"kids_category\"]")).click();
-		Set<String> allwindowshandles     =  driver.getWindowHandles();
-		for(String handle: allwindowshandles)
-		{
-			if(!handle.equalsIgnoreCase(parentwindow))
-			{
-				driver.switchTo().window(handle);
-				driver.findElement(By.xpath("//*[@id=\"filtrD\"]/div/div[4]/div[2]/label")).click();
-				Thread.sleep(5000);
-				driver.close();
-			}
-		}
-		driver.switchTo().window(parentwindow);
+		Limepg ob = new Limepg(driver);
+		ob.kids();
 	}
 	
 	
 	@Test(priority =  7)
 	public void women()
 	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(70));
-		 WebElement women =   driver.findElement(By.xpath("//*[@id=\"women_category\"]"));
-         Actions act = new Actions(driver);
-         act.moveToElement(women).perform();
-         driver.findElement(By.xpath("//*[@id=\"women_category_expand\"]/div/div[1]/div[3]/a")).click();
-		 driver.findElement(By.xpath("//*[@id=\"filtrD\"]/div/div[5]/div[1]")).click();
-		 driver.findElement(By.xpath("//*[@id=\"filtrD\"]/div/div[5]/div[2]/div[2]/label")).click();
+		Limepg ob = new Limepg(driver);
+		ob.women();
 		 
 	}
 	
 	@Test(priority = 8)
 	public void men()
 	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(70));
-		 WebElement men =   driver.findElement(By.xpath("//*[@id=\"men_category\"]"));
-        Actions act = new Actions(driver);
-        act.moveToElement(men).perform();
-        driver.findElement(By.xpath("//*[@id=\"men_category_expand\"]/div/div[3]/div[9]/div/a")).click();
-        driver.findElement(By.xpath("/html/body/div[2]/main/div[2]/div/div[3]/a/img")).click();
-        driver.findElement(By.xpath("//html/body/div[2]/main/div/div/div[3]/div[1]/div[4]/div[6]/div[2]/div[2]")).click();
+		
+		Limepg ob = new Limepg(driver);
+		ob.men();
+        
 	}
 	
 	@Test(priority = 9)
-	public void scrnsht() throws IOException
+	public void scrnsht() throws IOException, InterruptedException
 	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(90));
-		driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]")).click();	
-		driver.findElement(By.xpath("//*[@id=\"newDeskVmart\"]/a")).click();
-	    File src =  ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-	    WebElement vmartpg = driver.findElement(By.xpath("//*[@id=\"views\"]/div"));
-	    File vmartscrn =   vmartpg.getScreenshotAs(OutputType.FILE);
-	    FileHandler.copy(vmartscrn, new File("./Screenshot/vmartpage.png"));
+		
+		Limepg ob = new Limepg(driver);
+		ob.screenshot();
+	  
 	    
 	}
 	
 	
 	
-	@Test(priority = 10)
-	public void logout()
-	{
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-		 driver.findElement(By.xpath("//*[@id=\"DeskLogo\"]")).click();
-		 driver.findElement(By.xpath("//*[@id=\"desktop_profile\"]/div[2]/div/div[2]")).click();
-		 driver.findElement(By.xpath("/html/body/div[2]/div[4]/div/div[5]/div/div/div[4]/div[1]/div/div[1]/div[2]/a")).click();
-		 
-	}
 	
 	
 }
-
-

@@ -6,7 +6,7 @@
       <class name="testpkg.Limetest">
         <methods>
           <include name="setup"/>
-          <include name="logout"/>
+          <include name="scrnsht"/>
         </methods>
       </class> <!-- testpkg.Limetest -->
     </classes>
